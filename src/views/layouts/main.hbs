@@ -42,8 +42,31 @@
                                 <i>Catalog</i>
                             </a>
                         </li>
+        
+                        {{#if isAuthenticated}}
+                        <!--For login users-->
+                        <li class="nav-item">
+                            <!-- Link to Add Photo Page -->
+                            <a href="/photo-add">
+                                <i>Add Photo</i>
+                            </a>
+                        </li>
 
-                        <!--For Guest User-->
+                        <li class="nav-item">
+                            <!-- Link to Profile Page -->
+                            <a href="/my-profile">
+                                <i>Profile</i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <!-- Link to Logout Page -->
+                            <a href="/logout">
+                                <i>Logout</i>
+                            </a>
+                        </li>
+                        {{else}}
+                               <!--For Guest User-->
                         <li class="nav-item">
                             <!-- Link to Login Page -->
                             <a href="/login">
@@ -56,28 +79,7 @@
                                 <i>Register</i>
                             </a>
                         </li>
-
-                        <!--For login users-->
-                        <li class="nav-item">
-                            <!-- Link to Add Photo Page -->
-                            <a href="/photo-add">
-                                <i>Add Photo</i>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <!-- Link to Profile Page -->
-                            <a href="/profile">
-                                <i>Profile</i>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <!-- Link to Logout Page -->
-                            <a href="/logout">
-                                <i>Logout</i>
-                            </a>
-                        </li>
+                        {{/if}}
                     </ul>
                 </div>
             </div>

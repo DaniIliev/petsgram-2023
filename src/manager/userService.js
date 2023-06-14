@@ -1,31 +1,29 @@
-const User = require('../models/auth')
+const User = require('../models/User')
+const secretCode = require('../config/SECRET')
+const jwt = require('jsonwebtoken')
 
-// const bcrypt = require('bcrypt')
-// const jwt = require('jsonwebtoken')
-
-
-// const secret = 'mysecretsecret'
-
-// async function saveDb(){
-//     const data = JSON.stringify(data, null,2)
-//     await fs.writeFile('./db.json', data)
-// }
-
-exports.register = async (username,email,password, repeatPassword) =>{
-    if(password != repeatPassword){
-        throw('Password do not match!')
+exports.register = async (username, email, password, repeatPassword) => {
+    if (password != repeatPassword) {
+        throw ('Password do not match!')
     }
-    const user = User.create({username,email, password})
+    const user = User.create({ username, email, password })
     return user
 }
 
-//     const salt = await bcrypt.genSalt(10);
-//     const hash = await bcrypt.hash(password, salt)
+exports.getUsernameByUsername = (username) => User.findOne({ username })
 
-//     db.users.push({
-//         username,
-//         email,
-//         password: hash
-//     })
-//     await saveDb()
-// }
+exports.login = async (username,password) => {
+
+    const user = await this.getUsernameByUsername(username)
+
+    const isValid = user.validatePassword(password)
+
+    if(!user || !isValid){
+        throw 'Invalid username or password!'
+    }
+
+    const payload = {_id: user._id, username: user.username}
+    const token = await jwt.sign(payload, secretCode, {expiresIn: '2h'})
+
+    return token
+}
